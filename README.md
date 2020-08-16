@@ -16,7 +16,7 @@ It must do the following:
 1. CSV file starts off as small, but this should scale to 1M+ rows
 2. User experience, we want as little stutter/lag. No slow parsing, no janky scrollign, etc.
 3. UI doesn't have to be pretty, but include cells/rows breaks in the table and a easily visible area to drag and drop the CSV file
-4. NPM modules are fair game
+4. Google and NPM modules are fair game
 
 ## Instructions
 
