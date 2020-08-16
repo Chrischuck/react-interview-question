@@ -1,6 +1,5 @@
 const fs = require('fs');
 const faker = require('faker');
-console.log(process.argv);
 
 const size = process.argv[2];
 
