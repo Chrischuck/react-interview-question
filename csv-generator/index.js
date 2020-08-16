@@ -1,11 +1,24 @@
 const fs = require('fs');
 const faker = require('faker');
+console.log(process.argv);
+
+const size = process.argv[2];
+
+if (!size || !['sm', 'md', 'lg'].includes(size)) {
+  throw new Error('No size specified.');
+}
+
+const SIZES = {
+  sm: 1000,
+  md: 100000,
+  lg: 1000000,
+};
 
 const lineBreak = '\r\n';
 
 let data = `first_name,last_name,phone_number,email,profile_picture${lineBreak}`;
 
-for (let i = 0; i < 10000; i++) {
+for (let i = 0; i < SIZES[size]; i++) {
   const row = `${faker.name.firstName()},${faker.name.lastName()},${faker.phone.phoneNumberFormat()},${faker.internet.email()},${faker.image.avatar()}${lineBreak}`;
   data += row;
 }

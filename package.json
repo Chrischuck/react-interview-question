@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "generate-csv": "node ./csv-generator/index.js",
-    "generate-csv:sm": "npm run generate-save sm",
-    "generate-csv:md": "npm run generate-save md",
-    "generate-csv:lg": "npm run generate-save lg",
+    "generate-csv:sm": "npm run generate-csv sm",
+    "generate-csv:md": "npm run generate-csv md",
+    "generate-csv:lg": "npm run generate-csv lg",
     "start": "parcel src/index.html"
   },
   "author": "",

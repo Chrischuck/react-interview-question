@@ -23,7 +23,7 @@ It must do the following:
 ## Instructions
 
 1. Run `npm install`
-2. Run `npm run generate-csv:sm` to create a dataset size 100. This will make a file called `data.csv` in the root directory
+2. Run `npm run generate-csv:sm` to create a dataset size 1000. This will make a file called `data.csv` in the root directory
 3. Run `npm run start` to spin up the app on `localhost:1234`
 4. To test on larger datasets, run `npm run generate-csv:md` for 100k rows and `npm run generate-csv:lg` for 1M rows
 5. Have fun
