@@ -1,7 +1,5 @@
 # React interview question
 
-![demo](./demo.gif)
-
 ## Objective
 
 Create a React application that reads a CSV file and displays it in a table view.
@@ -28,3 +26,7 @@ It must do the following:
 3. Run `npm run start` to spin up the app on `localhost:1234`
 4. To test on larger datasets, run `npm run generate-csv:md` for 100k rows and `npm run generate-csv:lg` for 1M rows
 5. Have fun
+
+# Demo
+
+![demo](./demo.gif)
