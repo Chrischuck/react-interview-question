@@ -1,0 +1,23 @@
+{
+  "name": "generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate-csv": "node ./csv-generator/index.js",
+    "generate-csv:sm": "npm run generate-save sm",
+    "generate-csv:md": "npm run generate-save md",
+    "generate-csv:lg": "npm run generate-save lg",
+    "start": "parcel src/index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "parcel": "^2.0.0-beta.1"
+  }
+}
