@@ -1,5 +1,7 @@
 # React interview question
 
+![demo](./demo.gif)
+
 ## Objective
 
 Create a React application that reads a CSV file and displays it in a table view.
