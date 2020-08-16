@@ -18,7 +18,8 @@ It must do the following:
 1. CSV file starts off as small, but this should scale to 1M+ rows
 2. Performance, try not to lock the browser on this one
 3. UI doesn't have to be pretty, but it shouldn't be ugly
-4. Google and NPM modules are fair game
+4. Try to complete this in under 2 hours
+5. Google and NPM modules are fair game
 
 ## Instructions
 
