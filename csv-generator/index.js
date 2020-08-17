@@ -1,9 +1,17 @@
+// Thanks for the help w/ threads: https://medium.com/@Trott/using-worker-threads-in-node-js-80494136dbb6
+const {
+  Worker,
+  isMainThread,
+  parentPort,
+  workerData,
+} = require('worker_threads');
+const { performance } = require('perf_hooks');
 const fs = require('fs');
 const faker = require('faker');
 
 const size = process.argv[2];
 
-if (!size || !['sm', 'md', 'lg'].includes(size)) {
+if (isMainThread && (!size || !['sm', 'md', 'lg'].includes(size))) {
   throw new Error('No size specified.');
 }
 
@@ -15,17 +23,69 @@ const SIZES = {
 
 const lineBreak = '\r\n';
 
-let data = `first_name,last_name,phone_number,email,profile_picture${lineBreak}`;
+const header = `first_name,last_name,phone_number,email,profile_picture`;
+const dataChunks = [];
+const csvLength = SIZES[size];
+const t0 = performance.now();
 
-for (let i = 0; i < SIZES[size]; i++) {
-  const row = `${faker.name.firstName()},${faker.name.lastName()},${faker.phone.phoneNumberFormat()},${faker.internet.email()},${faker.image.avatar()}`;
-  data += row;
-  if (i < SIZES[size] - 1) {
-    data += lineBreak;
+function main() {
+  if (isMainThread) {
+    if (size !== 'lg') {
+      const data = generateData(csvLength);
+      return writeData(`${header}${lineBreak}${data}`);
+    }
+
+    const threadCount = 2;
+    const threads = new Set();
+    const csvLengthPartician = csvLength / threadCount;
+
+    for (let i = 1; i <= threadCount; i++) {
+      threads.add(
+        new Worker(__filename, {
+          workerData: { end: csvLengthPartician },
+        })
+      );
+    }
+
+    for (let worker of threads) {
+      worker.on('error', (err) => {
+        throw err;
+      });
+      worker.on('exit', () => {
+        threads.delete(worker);
+        if (threads.size === 0) {
+          const fileData = dataChunks.reduce((accum, currentValue) => {
+            return `${accum}${lineBreak}${currentValue}`;
+          }, header);
+          writeData(fileData);
+        }
+      });
+      worker.on('message', (msg) => dataChunks.push(msg));
+    }
+  } else {
+    const rows = generateData(workerData.end);
+    parentPort.postMessage(rows);
   }
 }
 
-fs.writeFile('data.csv', data, function (err) {
-  if (err) return console.log(err);
-  console.log('data written to csv');
-});
+function generateData(end) {
+  let rows = '';
+  for (let i = 0; i < end; i++) {
+    rows += `${faker.name.firstName()},${faker.name.lastName()},${faker.phone.phoneNumberFormat()},${faker.internet.email()},${faker.image.avatar()}`;
+    if (i < end - 1) {
+      rows += lineBreak;
+    }
+  }
+  return rows;
+}
+
+function writeData(data) {
+  fs.writeFile('data.csv', data, function (err) {
+    if (err) return console.log(err);
+    const t1 = performance.now();
+    console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
+    console.log('data written to csv');
+  });
+}
+
+main();
