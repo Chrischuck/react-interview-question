@@ -26,7 +26,7 @@ It must do the following:
 4. To test on larger datasets, run `npm run generate-csv:md` for 100k rows and `npm run generate-csv:lg` for 1M rows
 5. Have fun
 
-# Post Completeion Questions
+# Post Completion Questions
 
 1. Would your solution be able to handle an extremely large CSV file(1GB+)? If not, how would you fix it.
 2. What ways could you improve your solution?
