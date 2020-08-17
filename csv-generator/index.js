@@ -5,7 +5,6 @@ const {
   parentPort,
   workerData,
 } = require('worker_threads');
-const { performance } = require('perf_hooks');
 const fs = require('fs');
 const faker = require('faker');
 
@@ -26,9 +25,9 @@ const lineBreak = '\r\n';
 const header = `first_name,last_name,phone_number,email,profile_picture`;
 const dataChunks = [];
 const csvLength = SIZES[size];
-const t0 = performance.now();
 
 function main() {
+  console.log('writing data to csv....');
   if (isMainThread) {
     if (size !== 'lg') {
       const data = generateData(csvLength);
@@ -82,8 +81,6 @@ function generateData(end) {
 function writeData(data) {
   fs.writeFile('data.csv', data, function (err) {
     if (err) return console.log(err);
-    const t1 = performance.now();
-    console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
     console.log('data written to csv');
   });
 }
