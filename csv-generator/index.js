@@ -18,8 +18,11 @@ const lineBreak = '\r\n';
 let data = `first_name,last_name,phone_number,email,profile_picture${lineBreak}`;
 
 for (let i = 0; i < SIZES[size]; i++) {
-  const row = `${faker.name.firstName()},${faker.name.lastName()},${faker.phone.phoneNumberFormat()},${faker.internet.email()},${faker.image.avatar()}${lineBreak}`;
+  const row = `${faker.name.firstName()},${faker.name.lastName()},${faker.phone.phoneNumberFormat()},${faker.internet.email()},${faker.image.avatar()}`;
   data += row;
+  if (i < SIZES[size] - 1) {
+    data += lineBreak;
+  }
 }
 
 fs.writeFile('data.csv', data, function (err) {
